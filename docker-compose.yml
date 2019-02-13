@@ -1,0 +1,10 @@
+version: '3'
+services:
+  ddns-r53:
+    container_name: ddns-r53
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    env_file:
+      - ./config.env
+    restart: always
