@@ -28,7 +28,7 @@ Variables without default are required.
 
 **`R53_DOMAINS`**
 - The target domain name(s) to update.
-- Can provide multiple domain names in a comma separated list (no sapces).
+- Comma separated list, no spaces.
 
 **`R53_TTL`**
 - **Default:** `3600`
