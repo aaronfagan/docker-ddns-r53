@@ -19,10 +19,15 @@ aws configure set default.region $AWS_REGION
 aws configure set default.output $AWS_OUTPUT
 cp -rfun /opt/config/ddns-r53.sh /root/ddns-r53.sh
 
+
+for DOMAIN in $(echo $R53_DOMAIN | sed "s/,/ /g")
+do
 cat <<EOF >/etc/cron.d/ddns_r53
-$CRON root bash /root/ddns-r53.sh --zone $R53_ZONE_ID --domain $R53_DOMAIN --ttl $R53_TTL --ns $R53_NAME_SERVER
+$CRON root bash /root/ddns-r53.sh --zone $R53_ZONE_ID --domain $DOMAIN --ttl $R53_TTL --ns $R53_NAME_SERVER
 EOF
-bash /root/ddns-r53.sh --zone $R53_ZONE_ID --domain $R53_DOMAIN --ttl $R53_TTL --ns $R53_NAME_SERVER > /dev/null 2>&1
+bash /root/ddns-r53.sh --zone $R53_ZONE_ID --domain $DOMAIN --ttl $R53_TTL --ns $R53_NAME_SERVER > /dev/null 2>&1
+done
+
 
 service cron start > /dev/null 2>&1
 
