@@ -24,7 +24,7 @@ do
 cat <<EOF >/etc/cron.d/ddns_r53_$DOMAIN
 $CRON root bash /root/ddns-r53.sh --zone $R53_ZONE_ID --domain $DOMAIN --ttl $R53_TTL --ns $R53_NAME_SERVER
 EOF
-bash /root/ddns-r53.sh --zone $R53_ZONE_ID --domain $DOMAIN --ttl $R53_TTL --ns $R53_NAME_SERVER
+bash /root/ddns-r53.sh --zone $R53_ZONE_ID --domain $DOMAIN --ttl $R53_TTL --ns $R53_NAME_SERVER > /dev/null 2>&1
 done
 
 service cron start > /dev/null 2>&1
