@@ -1,6 +1,6 @@
 # Dynamic DNS for Route 53
 
-This image is an always-on solution to automatically update a Route 53 record set with your host IP address, at repeating intervals. Uses the AWS CLI, cron, and a shell script that checks if updates are required, and if so, executes them.
+This image is an always-on solution to automatically update a Route 53 record set with your host IP address, at repeating intervals. Uses the AWS CLI, cron, and a shell script that checks if updates are required, and if so, executes them. If a domain does not already exist in your record set, it will be automatically created.
 
 ## Environment Variables
 
