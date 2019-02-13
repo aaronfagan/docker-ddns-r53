@@ -26,8 +26,9 @@ Variables without default are required.
 **`R53_ZONE_ID`**
 - The ID of the target hosted zone in Route 53.
 
-**`R53_DOMAIN`**
-- The target domain name to update.
+**`R53_DOMAINS`**
+- The target domain name(s) to update.
+- Can provide multiple domain names in a comma separated list (no sapces).
 
 **`R53_TTL`**
 - **Default:** `3600`
