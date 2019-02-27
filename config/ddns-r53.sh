@@ -6,10 +6,10 @@ Usage:
 	./$(basename "$0") [options]
 
 Options:
-	--zone 		ROUTE53_ZONE_ID (Required).
-	--domain 	DOMAIN_NAME (Required).
-	--ns 		NAME_SERVER (Optional).
-	--ttl 		NUMBER (Optional, Default = $TTL).
+	--zone 		Your Route53 Zone ID (required).
+	--domain 	The domain name to update (required).
+	--ns 		The name server to check records against (optional).
+	--ttl 		The TTL to set on the record, when udpating (optional, default = $TTL).
 
 Example:
 	./$(basename "$0") \\
