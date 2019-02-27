@@ -6,17 +6,17 @@ Usage:
 	./$(basename "$0") [options]
 
 Options:
-	--zone ROUTE53_ZONE_ID (Required)
-	--domain DOMAIN_NAME (Required)
-	--ns NAME_SERVER (Optional)
-	--ttl NUMBER (Optional, Default = $TTL)
+	--zone 		ROUTE53_ZONE_ID (Required).
+	--domain 	DOMAIN_NAME (Required).
+	--ns 		NAME_SERVER (Optional).
+	--ttl 		NUMBER (Optional, Default = $TTL).
 
 Example:
 	./$(basename "$0") \\
-		--zone 123456789 \\
-		--domain www.example.com \\
-		--ttl 1800 \\
-		--ns ns1.example.com
+	--zone 123456789 \\
+	--domain www.example.com \\
+	--ttl 1800 \\
+	--ns ns1.example.com
 	"
 	exit $1
 }
