@@ -6,10 +6,10 @@ Usage:
 	./$(basename "$0") [options]
 
 Options:
-	--zone 		Your Route53 Zone ID (required).
-	--domain 	The domain name to update (required).
-	--ns 		The name server to check records against (optional).
-	--ttl 		The TTL to set on the record, when udpating (optional, default = $TTL).
+	--zone 		Your Route53 Zone ID. REQUIRED.
+	--domain 	The domain name to update. REQUIRED.
+	--ns 		The name server to check records against.
+	--ttl 		The TTL to set on the record, when udpating. DEFAULT = $TTL.
 
 Example:
 	./$(basename "$0") \\
@@ -26,6 +26,7 @@ DOMAIN=""
 RECORD="A"
 NS=""
 TTL="300"
+ERROR=false
 
 while [[ $# -gt 0 ]]
 do
@@ -62,6 +63,12 @@ do
 		;;
 	esac
 done
+
+[ -z "$ZONE" ] && echo "ERROR: --zone is required." && ERROR=true;
+[ -z "$DOMAIN" ] && echo "ERROR: --domain is required." && ERROR=true;
+if [ "$ERROR" = true ]; then
+   exit 1;
+fi
 
 IP=$(curl https://checkip.amazonaws.com --silent)
 if [ -n "$NS" ]
