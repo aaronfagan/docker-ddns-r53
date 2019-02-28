@@ -1,5 +1,11 @@
 #!/bin/bash
 
+ZONE=""
+DOMAIN=""
+RECORD="A"
+NS=""
+TTL="300"
+
 usage() {
 	echo "
 Usage:
@@ -20,13 +26,6 @@ Example:
 	"
 	exit $1
 }
-
-ZONE=""
-DOMAIN=""
-RECORD="A"
-NS=""
-TTL="300"
-ERROR=false
 
 while [[ $# -gt 0 ]]
 do
@@ -53,22 +52,16 @@ do
 			shift
 		;;
 		--help)
-			usage 0
+			usage
 		;;
 		*) 
 			INVALID+=("$1")
 			shift
-			echo -e "\nInvalid arguement: $INVALID"
-			usage 1
+			echo -e "\033[0;31mERROR:\033[0;37m Invalid arguement: $INVALID\033[0m"
+			usage
 		;;
 	esac
 done
-
-[ -z "$ZONE" ] && echo "ERROR: --zone is required." && ERROR=true;
-[ -z "$DOMAIN" ] && echo "ERROR: --domain is required." && ERROR=true;
-if [ "$ERROR" = true ]; then
-   exit 1;
-fi
 
 IP=$(curl https://checkip.amazonaws.com --silent)
 if [ -n "$NS" ]
@@ -106,8 +99,8 @@ EOF
 
 if [ -z "$ZONE" ] || [ -z "$DOMAIN" ]
 then
-	echo -e "\033[0;31m*** ERROR ***\033[0;37m Required arguements are missing.\033[0m"
-	usage 1
+	echo -e "\033[0;31mERROR:\033[0;37m Required arguements are missing.\033[0m"
+	usage
 else
 	if [ "$IP" = "$DNS" ]
 	then
@@ -119,10 +112,5 @@ else
 		ERROR=`cat ${0%.*}.log`
 		rm -f ${0%.*}.json ${0%.*}.log
 		echo "done!"
-		if [[ "$ERROR" =~ "error" ]]
-		then
-			echo -en "\033[0;31m*** ERROR ***\033[0;37m"$ERROR"\033[0m\n"
-			exit 1
-		fi
 	fi
 fi
