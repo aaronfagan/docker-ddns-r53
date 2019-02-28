@@ -24,8 +24,8 @@ echo "DDNS is running!"
 
 for DOMAIN in $(echo $R53_DOMAINS | sed "s/,/ /g")
 do
-FILENAME="${DOMAIN//./_}"
-cat <<EOF >/etc/cron.d/ddns_r53_$FILENAME
+FILENAME="ddns_r53_${DOMAIN//./_}"
+cat <<EOF >/etc/cron.d/$FILENAME
 $CRON root /root/ddns-r53.sh --zone $R53_ZONE_ID --domain $DOMAIN --ttl $R53_TTL --ns $R53_NAME_SERVER > /proc/1/fd/1
 EOF
 bash /root/ddns-r53.sh --zone $R53_ZONE_ID --domain $DOMAIN --ttl $R53_TTL --ns $R53_NAME_SERVER > /proc/1/fd/1
