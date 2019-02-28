@@ -19,6 +19,8 @@ aws configure set default.region $AWS_REGION
 aws configure set default.output $AWS_OUTPUT
 cp -rfun /opt/config/ddns-r53.sh /root/ddns-r53.sh
 
+echo "DDNS is running!"
+
 for DOMAIN in $(echo $R53_DOMAINS | sed "s/,/ /g")
 do
 cat <<EOF >/etc/cron.d/ddns_r53_$DOMAIN
@@ -28,8 +30,6 @@ bash /root/ddns-r53.sh --zone $R53_ZONE_ID --domain $DOMAIN --ttl $R53_TTL --ns 
 done
 
 service cron start > /dev/null 2>&1
-
-echo "DDNS is running!"
 
 # KEEP CONTAINER RUNNING
 exec $(which tail) -f /dev/null
