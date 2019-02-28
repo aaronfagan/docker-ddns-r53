@@ -18,12 +18,14 @@ aws configure set aws_secret_access_key $AWS_SECRET
 aws configure set default.region $AWS_REGION
 aws configure set default.output $AWS_OUTPUT
 cp -rfun /opt/config/ddns-r53.sh /root/ddns-r53.sh
+chmod +x -R /root/ddns-r53.sh
 
 echo "DDNS is running!"
 
 for DOMAIN in $(echo $R53_DOMAINS | sed "s/,/ /g")
 do
-cat <<EOF >/etc/cron.d/ddns_r53_$DOMAIN
+DOMAIN_FILE="${$DOMAIN//./_}"
+cat <<EOF >/etc/cron.d/ddns_r53_$DOMAIN_FILE
 $CRON root bash /root/ddns-r53.sh --zone $R53_ZONE_ID --domain $DOMAIN --ttl $R53_TTL --ns $R53_NAME_SERVER > /proc/1/fd/1
 EOF
 bash /root/ddns-r53.sh --zone $R53_ZONE_ID --domain $DOMAIN --ttl $R53_TTL --ns $R53_NAME_SERVER > /proc/1/fd/1
