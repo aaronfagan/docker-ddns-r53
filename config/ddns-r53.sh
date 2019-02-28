@@ -111,9 +111,9 @@ then
 else
 	if [ "$IP" = "$DNS" ]
 	then
-		echo "Update not required."
+		echo "[$DOMAIN] Update not required."
 	else
-		echo -n "Updating..."
+		echo -n "[$DOMAIN] Updating..."
 		echo $JSON > ${0%.*}.json
 		aws route53 change-resource-record-sets --hosted-zone-id $ZONE --change-batch file://${0%.*}.json &> ${0%.*}.log
 		ERROR=`cat ${0%.*}.log`
