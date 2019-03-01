@@ -28,6 +28,10 @@ Variables without default are required.
 - The target domain name(s) to update.
 - Comma separated list, no spaces.
 
+**`R53_TYPE`**
+- **Default:** `A`
+- The DNS record type for all listed domains.
+
 **`R53_TTL`**
 - **Default:** `3600`
 - The TTL to set on the target domain.
