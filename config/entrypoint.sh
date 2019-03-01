@@ -20,7 +20,7 @@ aws configure set default.output $AWS_OUTPUT
 cp -rfun /opt/config/ddns-r53.sh /root/ddns-r53.sh
 chmod +x -R /root/ddns-r53.sh
 
-echo "DDNS is running!"
+echo "[$(date +'%F %T')] DDNS is running!"
 
 R53_ZONE=$(echo $R53_ZONE | tr a-z A-Z)
 R53_TYPE=$(echo $R53_TYPE | tr a-z A-Z)
