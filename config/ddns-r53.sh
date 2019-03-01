@@ -99,8 +99,8 @@ EOF
 
 if [ -z "$ZONE" ] || [ -z "$DOMAIN" ]
 then
-	if [ -z "$ZONE" ]; then echo -e "\033[0;31mERROR:\033[0;37m --zone is required.\033[0m"; fi
-	if [ -z "$DOMAIN" ]; then echo -e "\033[0;31mERROR:\033[0;37m --domain is required.\033[0m"; fi
+	if [ -z "$ZONE" ]; then echo -e "\033[0;31mERROR:\033[0;37m --zone arguement is required.\033[0m"; fi
+	if [ -z "$DOMAIN" ]; then echo -e "\033[0;31mERROR:\033[0;37m --domain arguement is required.\033[0m"; fi
 	usage
 else
 	if [ "$IP" = "$DNS" ]
