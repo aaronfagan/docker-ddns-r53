@@ -119,6 +119,6 @@ else
 		aws route53 change-resource-record-sets --hosted-zone-id $ZONE --change-batch file://${0%.*}.json &> ${0%.*}.log
 		grep 'error' ${0%.*}.log > /dev/null 2>&1
 		if [ $? != 0 ]; then printf "success!\n"; else printf "failed! $(grep 'error' ${0%.*}.log)\n"; fi
-		#rm -f ${0%.*}.json ${0%.*}.log
+		rm -f ${0%.*}.json ${0%.*}.log
 	fi
 fi
