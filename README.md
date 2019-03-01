@@ -21,7 +21,7 @@ Variables without default are required.
 - **Default:** `0 * * * *` (Every hour)
 - Standard cron format. How often to run the DNS update check.
 
-**`R53_ZONE_ID`**
+**`R53_ZONE`**
 - The ID of the target hosted zone in Route 53.
 
 **`R53_DOMAINS`**
