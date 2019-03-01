@@ -15,13 +15,14 @@ Options:
 	--zone 		Your Route53 Zone ID. REQUIRED.
 	--domain 	The domain name to update. REQUIRED.
 	--type 		The DNS record type to update. DEFAULT = $TYPE.
-	--ns 		The name server to check records against.
 	--ttl 		The TTL to set on the record, when udpating. DEFAULT = $TTL.
+	--ns 		The name server to check records against.
 
 Example:
 	./$(basename "$0") \\
 	--zone 123456789 \\
 	--domain www.example.com \\
+	--type A \\
 	--ttl 1800 \\
 	--ns ns1.example.com
 	"
@@ -47,13 +48,13 @@ do
 			shift
 			shift
 		;;
-		--ns)
-			NS="${2:-$NS}"
+		--ttl)
+			TTL="${2:-$TTL}"
 			shift
 			shift
 		;;
-		--ttl)
-			TTL="${2:-$TTL}"
+		--ns)
+			NS="${2:-$NS}"
 			shift
 			shift
 		;;
