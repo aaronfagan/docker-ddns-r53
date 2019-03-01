@@ -70,6 +70,7 @@ do
 	esac
 done
 
+ZONE=$(echo $ZONE | tr a-z A-Z)
 DOMAIN=$(echo $DOMAIN | tr A-Z a-z)
 TYPE=$(echo $TYPE | tr a-z A-Z)
 NS=$(echo $NS | tr A-Z a-z)
