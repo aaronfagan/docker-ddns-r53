@@ -44,7 +44,7 @@ do
 			shift
 		;;
 		--type)
-			TYPE="${2:-$TYPE^^}"
+			TYPE="${2:-$TYPE}"
 			shift
 			shift
 		;;
@@ -90,7 +90,7 @@ JSON=$(cat <<EOF
 			"Action": "UPSERT",
 			"ResourceRecordSet": {
 				"Name": "$DOMAIN",
-				"Type": "$TYPE",
+				"Type": "$(echo $TYPE | tr a-z A-Z)",
 				"TTL": $TTL,
 				"ResourceRecords": [
 					{
