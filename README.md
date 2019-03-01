@@ -30,7 +30,7 @@ Variables without default are required.
 
 **`R53_TYPE`**
 - **Default:** `A`
-- The DNS record type for all listed domains.
+- The DNS record type for all target domain name(s).
 
 **`R53_TTL`**
 - **Default:** `3600`
