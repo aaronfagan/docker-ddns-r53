@@ -70,6 +70,9 @@ do
 	esac
 done
 
+DOMAIN=$(echo $DOMAIN | tr A-Z a-z)
+TYPE=$(echo $TYPE | tr a-z A-Z)
+
 IP=$(curl https://checkip.amazonaws.com --silent)
 if [ -n "$NS" ]
 then
@@ -89,8 +92,8 @@ JSON=$(cat <<EOF
 		{
 			"Action": "UPSERT",
 			"ResourceRecordSet": {
-				"Name": "$(echo $DOMAIN | tr A-Z a-z)",
-				"Type": "$(echo $TYPE | tr a-z A-Z)",
+				"Name": "$DOMAIN",
+				"Type": "$TYPE",
 				"TTL": $TTL,
 				"ResourceRecords": [
 					{
