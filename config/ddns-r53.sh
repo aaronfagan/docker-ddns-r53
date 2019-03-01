@@ -72,6 +72,7 @@ done
 
 DOMAIN=$(echo $DOMAIN | tr A-Z a-z)
 TYPE=$(echo $TYPE | tr a-z A-Z)
+NS=$(echo $NS | tr A-Z a-z)
 
 IP=$(curl https://checkip.amazonaws.com --silent)
 if [ -n "$NS" ]
