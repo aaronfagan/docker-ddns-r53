@@ -14,7 +14,7 @@ Usage:
 Options:
 	--zone 		Your Route53 Zone ID. REQUIRED.
 	--domain 	The domain name to update. REQUIRED.
-	--type 		The record type to update. DEFAULT = $TYPE.
+	--type 		The DNS record type to update. DEFAULT = $TYPE.
 	--ns 		The name server to check records against.
 	--ttl 		The TTL to set on the record, when udpating. DEFAULT = $TTL.
 
