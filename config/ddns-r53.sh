@@ -44,7 +44,7 @@ do
 			shift
 		;;
 		--type)
-			TYPE="${2:-$TYPE}"
+			TYPE="${2:-$TYPE^^}"
 			shift
 			shift
 		;;
