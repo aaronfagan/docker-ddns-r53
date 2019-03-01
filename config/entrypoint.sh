@@ -26,9 +26,9 @@ for DOMAIN in $(echo $R53_DOMAINS | sed "s/,/ /g")
 do
 FILENAME="ddns-r53_${DOMAIN//./-}"
 cat <<EOF >/etc/cron.d/$FILENAME
-$CRON root /root/ddns-r53.sh --zone $R53_ZONE_ID --domain $DOMAIN --type $(echo $R53_TYPE | tr a-z A-Z) --ttl $R53_TTL --ns $R53_NAME_SERVER > /proc/1/fd/1
+$CRON root /root/ddns-r53.sh --zone $R53_ZONE_ID --domain $(echo $DOMAIN | tr A-Z a-z) --type $(echo $R53_TYPE | tr a-z A-Z) --ttl $R53_TTL --ns $R53_NAME_SERVER > /proc/1/fd/1
 EOF
-bash /root/ddns-r53.sh --zone $R53_ZONE_ID --domain $DOMAIN --type $(echo $R53_TYPE | tr a-z A-Z) --ttl $R53_TTL --ns $R53_NAME_SERVER > /proc/1/fd/1
+bash /root/ddns-r53.sh --zone $R53_ZONE_ID --domain $(echo $DOMAIN | tr A-Z a-z) --type $(echo $R53_TYPE | tr a-z A-Z) --ttl $R53_TTL --ns $R53_NAME_SERVER > /proc/1/fd/1
 done
 
 service cron start > /dev/null 2>&1

@@ -89,7 +89,7 @@ JSON=$(cat <<EOF
 		{
 			"Action": "UPSERT",
 			"ResourceRecordSet": {
-				"Name": "$DOMAIN",
+				"Name": "$(echo $DOMAIN | tr A-Z a-z)",
 				"Type": "$(echo $TYPE | tr a-z A-Z)",
 				"TTL": $TTL,
 				"ResourceRecords": [
@@ -112,9 +112,9 @@ then
 else
 	if [ "$IP" = "$DNS" ]
 	then
-		echo "[$(date +'%F %T')] $DOMAIN - Update not required."
+		echo "[$(date +'%F %T')] $(echo $DOMAIN | tr A-Z a-z) - Update not required."
 	else
-		echo -n "[$(date +'%F %T')] $DOMAIN - Updating..."
+		echo -n "[$(date +'%F %T')] $(echo $DOMAIN | tr A-Z a-z) - Updating..."
 		echo $JSON > ${0%.*}.json
 		aws route53 change-resource-record-sets --hosted-zone-id $ZONE --change-batch file://${0%.*}.json &> ${0%.*}.log
 		grep 'error' ${0%.*}.log > /dev/null 2>&1
