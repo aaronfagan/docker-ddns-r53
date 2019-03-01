@@ -36,7 +36,7 @@ Variables without default are required.
 - **Default:** `3600`
 - The TTL to set on the target domain.
 
-**`R53_NAME_SERVER`**
+**`R53_NS`**
 - **Default:** Your ISP's DNS.
 - The name server to check records against.
 
