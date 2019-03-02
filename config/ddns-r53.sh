@@ -122,8 +122,7 @@ else
 		echo -ne "\033[0;37m[$(date +'%F %T')] $(echo $DOMAIN | tr A-Z a-z) - Update not required.\033[0m\n"
 		exit 0
 	else
-		DIRNAME="./ddns-r53"
-		FILENAME="${DIRNAME}/${DOMAIN//./-}_$(date +'%Y-%m-%d_%H-%M-%S_%N')"
+		FILENAME="./${DOMAIN//./-}_$(date +'%Y-%m-%d_%H-%M-%S_%N')"
 		echo -ne "\033[0;37m[$(date +'%F %T')] $(echo $DOMAIN | tr A-Z a-z) - Updating..."
 		echo $JSON > $FILENAME.json
 		aws route53 change-resource-record-sets --hosted-zone-id $ZONE --change-batch file://$FILENAME.json &> $FILENAME.log
@@ -131,11 +130,11 @@ else
 		if [ $? != 0 ]
 		then 
 			echo -ne "success!\033[0m\n"
-			rm -rf $DIRNAME
+			rm -rf $FILENAME.*
 			exit 0
 		else
 			echo -ne "failed! $(grep 'error' ${0%.*}.log)\033[0m\n"
-			rm -rf $DIRNAME
+			rm -rf $FILENAME.*
 			exit 1
 		fi
 	fi
