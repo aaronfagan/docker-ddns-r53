@@ -26,7 +26,6 @@ Example:
 	--ttl 1800 \\
 	--ns ns1.example.com
 	"
-	exit $1
 }
 
 while [[ $# -gt 0 ]]
@@ -60,12 +59,14 @@ do
 		;;
 		--help)
 			usage
+			exit 0
 		;;
 		*) 
 			INVALID+=("$1")
 			shift
 			echo -e "\033[0;31mERROR:\033[0;37m Invalid arguement: $INVALID\033[0m"
 			usage
+			exit 0
 		;;
 	esac
 done
@@ -111,19 +112,29 @@ EOF
 
 if [ -z "$ZONE" ] || [ -z "$DOMAIN" ]
 then
-	if [ -z "$ZONE" ]; then echo -e "\033[0;31mERROR:\033[0;37m --zone arguement is required.\033[0m"; fi
-	if [ -z "$DOMAIN" ]; then echo -e "\033[0;31mERROR:\033[0;37m --domain arguement is required.\033[0m"; fi
+	if [ -z "$ZONE" ]; then echo -ne "\033[0;31mERROR:\033[0;37m --zone arguement is required.\033[0m\n"; fi
+	if [ -z "$DOMAIN" ]; then echo -ne "\033[0;31mERROR:\033[0;37m --domain arguement is required.\033[0m\n"; fi
 	usage
+	exit 0
 else
 	if [ "$IP" = "$DNS" ]
 	then
-		echo "[$(date +'%F %T')] $(echo $DOMAIN | tr A-Z a-z) - Update not required."
+		echo -ne "\033[0;37m[$(date +'%F %T')] $(echo $DOMAIN | tr A-Z a-z) - Update not required.\033[0m\n"
+		exit 0
 	else
-		echo -n "[$(date +'%F %T')] $(echo $DOMAIN | tr A-Z a-z) - Updating..."
+		echo -ne "\033[0;37m[$(date +'%F %T')] $(echo $DOMAIN | tr A-Z a-z) - Updating..."
 		echo $JSON > ${0%.*}.json
 		aws route53 change-resource-record-sets --hosted-zone-id $ZONE --change-batch file://${0%.*}.json &> ${0%.*}.log
 		grep 'error' ${0%.*}.log > /dev/null 2>&1
-		if [ $? != 0 ]; then printf "success!\n"; else printf "failed! $(grep 'error' ${0%.*}.log)\n"; fi
-		rm -f ${0%.*}.json ${0%.*}.log
+		if [ $? != 0 ]
+		then 
+			echo -ne "success!\033[0m\n"
+			rm -f ${0%.*}.json ${0%.*}.log
+			exit 0
+		else
+			echo -ne "failed! $(grep 'error' ${0%.*}.log)\033[0m\n"
+			rm -f ${0%.*}.json ${0%.*}.log
+			exit 1
+		fi
 	fi
 fi
