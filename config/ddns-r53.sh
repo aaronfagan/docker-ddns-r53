@@ -123,7 +123,7 @@ else
 		exit 0
 	else
 		DIRNAME="./ddns-r53"
-		FILENAME="${DIRNAME}/${DOMAIN//./-}_$(date +'%Y-%m-%d_%H-%M-%S')"
+		FILENAME="${DIRNAME}/${DOMAIN//./-}_$(date +'%Y-%m-%d_%H-%M-%S_%N')"
 		echo -ne "\033[0;37m[$(date +'%F %T')] $(echo $DOMAIN | tr A-Z a-z) - Updating..."
 		echo $JSON > $FILENAME.json
 		aws route53 change-resource-record-sets --hosted-zone-id $ZONE --change-batch file://$FILENAME.json &> $FILENAME.log
