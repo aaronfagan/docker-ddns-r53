@@ -130,11 +130,11 @@ else
 		if [ $? != 0 ]
 		then 
 			echo -ne "success!\033[0m\n"
-			find . -name "$FILENAME.*" -type f -delete
+			rm -rf $FILENAME.*
 			exit 0
 		else
 			echo -ne "failed! $(grep 'error' ${0%.*}.log)\033[0m\n"
-			find . -name "$FILENAME.*" -type f -delete
+			rm -rf $FILENAME.*
 			exit 1
 		fi
 	fi
