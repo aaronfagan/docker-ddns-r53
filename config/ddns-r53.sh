@@ -28,8 +28,7 @@ Example:
 	"
 }
 
-while [[ $# -gt 0 ]]
-do
+while [[ $# -gt 0 ]]; do
 	key="$1"
 	case $key in
 		--zone)
@@ -77,11 +76,9 @@ TYPE=$(echo $TYPE | tr a-z A-Z)
 NS=$(echo $NS | tr A-Z a-z)
 
 IP=$(curl https://checkip.amazonaws.com --silent)
-if [ -n "$NS" ]
-then
+if [ -n "$NS" ]; then
 	DNS=$(dig $DOMAIN @$NS +short)
-	if [ "$?" = "10" ]
-	then
+	if [ "$?" = "10" ]; then
 		DNS=$(dig $DOMAIN +short)
 	fi
 else
@@ -110,15 +107,13 @@ JSON=$(cat <<EOF
 EOF
 )
 
-if [ -z "$ZONE" ] || [ -z "$DOMAIN" ]
-then
+if [ -z "$ZONE" ] || [ -z "$DOMAIN" ]; then
 	if [ -z "$ZONE" ]; then echo -ne "\033[0;31mERROR:\033[0;37m --zone arguement is required.\033[0m\n"; fi
 	if [ -z "$DOMAIN" ]; then echo -ne "\033[0;31mERROR:\033[0;37m --domain arguement is required.\033[0m\n"; fi
 	usage
 	exit 0
 else
-	if [ "$IP" = "$DNS" ]
-	then
+	if [ "$IP" = "$DNS" ]; then
 		echo -ne "\033[0;37m[$(date +'%F %T')] $(echo $DOMAIN | tr A-Z a-z) - Update not required.\033[0m\n"
 		exit 0
 	else
@@ -127,8 +122,7 @@ else
 		echo $JSON > ./$FILENAME.json
 		aws route53 change-resource-record-sets --hosted-zone-id $ZONE --change-batch file://./$FILENAME.json &> ./$FILENAME.log
 		grep 'error' ./$FILENAME.log > /dev/null 2>&1
-		if [ $? != 0 ]
-		then 
+		if [ $? != 0 ]; then 
 			echo -ne "success!\033[0m\n"
 			rm -rf $FILENAME.*
 			exit 0
