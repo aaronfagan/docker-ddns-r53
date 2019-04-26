@@ -7,4 +7,5 @@ services:
       dockerfile: Dockerfile
     env_file:
       - ./config.env
+    network_mode: host
     restart: always
