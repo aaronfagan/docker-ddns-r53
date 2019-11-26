@@ -9,23 +9,23 @@ TTL="3600"
 usage() {
 	echo "
 Usage:
-	./$(basename "$0") [options]
+    ./$(basename "$0") [options]
 
 Options:
-	--zone 		Your Route53 Zone ID. REQUIRED.
-	--domain 	The domain name to update. REQUIRED.
-	--type 		The DNS record type to update. DEFAULT = $TYPE.
-	--ttl 		The TTL to set on the record, when udpating. DEFAULT = $TTL.
-	--ns 		The name server to check records against.
+    --zone      Your Route53 Zone ID. REQUIRED.
+    --domain    The domain name to update. REQUIRED.
+    --type      The DNS record type to update. DEFAULT = $TYPE.
+    --ttl       The TTL to set on the record, when udpating. DEFAULT = $TTL.
+    --ns        The name server to check records against.
 
 Example:
-	./$(basename "$0") \\
-	--zone 123456789 \\
-	--domain www.example.com \\
-	--type A \\
-	--ttl 1800 \\
-	--ns ns1.example.com
-	"
+    ./$(basename "$0") \\
+    --zone 123456789 \\
+    --domain www.example.com \\
+    --type A \\
+    --ttl 1800 \\
+    --ns ns1.example.com
+"
 }
 
 while [[ $# -gt 0 ]]; do
