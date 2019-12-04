@@ -36,12 +36,15 @@ for DOMAIN in $(echo ${R53_DOMAINS} | sed -e "s/,/ /g" -e "s/  / /g"); do
 	DOMAIN=$(echo ${DOMAIN} | tr A-Z a-z)
 	FILENAME="ddns-${DOMAIN//./-}"
 	echo "${CRON} root /root/ddns-r53.sh --zone ${R53_ZONE} --domain ${DOMAIN} --type ${R53_TYPE} --ttl ${R53_TTL} --ns ${R53_NS} > /proc/1/fd/1" > /etc/cron.d/${FILENAME}
-	bash /root/ddns-r53.sh --zone ${R53_ZONE} --domain ${DOMAIN} --type ${R53_TYPE} --ttl ${R53_TTL} --ns ${R53_NS} > /proc/1/fd/1
 done
 
 service cron start > /dev/null 2>&1
 
 echo "[$(date +'%F %T')] DDNS is running!"
+
+for DOMAIN in $(echo ${R53_DOMAINS} | sed -e "s/,/ /g" -e "s/  / /g"); do
+    bash /root/ddns-r53.sh --zone ${R53_ZONE} --domain ${DOMAIN} --type ${R53_TYPE} --ttl ${R53_TTL} --ns ${R53_NS} > /proc/1/fd/1
+done
 
 # KEEP CONTAINER RUNNING
 exec $(which tail) -f /dev/null
