@@ -13,10 +13,6 @@ Variables without default are required.
 **`AWS_REGION`**
 - The AWS region your Route 53 hosted zone is in.
 
-**`AWS_OUTPUT`**
-- **Default:** `json`
-- Desired AWS CLI output format.
-
 **`CRON`**
 - **Default:** `0 * * * *` (Every hour)
 - Standard cron format. How often to run the DNS update check.
@@ -26,7 +22,7 @@ Variables without default are required.
 
 **`R53_DOMAINS`**
 - The target domain name(s) to update.
-- Comma separated list, no spaces.
+- Comma separated list.
 
 **`R53_TYPE`**
 - **Default:** `A`

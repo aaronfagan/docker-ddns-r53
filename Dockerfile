@@ -1,6 +1,5 @@
 FROM ubuntu:18.04
 
-ENV AWS_OUTPUT="json"
 ENV CRON="0 * * * *"
 ENV R53_TYPE="A"
 ENV R53_TTL="3600"
