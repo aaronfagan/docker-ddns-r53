@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
-echo "$TZ" > /etc/timezone && \
+ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && \
+echo "${TZ}" > /etc/timezone && \
 dpkg-reconfigure -f noninteractive tzdata > /dev/null 2>&1
 
 VARS_REQUIRED=(
