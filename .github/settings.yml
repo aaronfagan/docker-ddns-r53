@@ -1,7 +1,7 @@
 repository:
   name: docker-ddns-r53
-  description: Docker image that provides dynamic DNS with Route 53.
-  homepage: Docker image that provides dynamic DNS with Route 53.
+  description: "Docker image that provides dynamic DNS with Route 53"
+  homepage: "https://hub.docker.com/r/aaronfagan/ddns-r53"
   default_branch: master
   private: false
   has_issues: true
