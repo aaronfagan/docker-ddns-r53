@@ -4,13 +4,13 @@ This image is an always-on solution to automatically update a Route 53 record se
 ## Environment Variables
 Variables without default are required.
 
-**`AWS_KEY`**
+**`AWS_ACCESS_KEY_ID`**
 - Your IAM user key.
 
-**`AWS_SECRET`**
+**`AWS_SECRET_ACCESS_KEY`**
 - Your IAM user secret.
 
-**`AWS_REGION`**
+**`AWS_DEFAULT_REGION`**
 - The AWS region your Route 53 hosted zone is in.
 
 **`CRON`**

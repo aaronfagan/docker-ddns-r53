@@ -6,9 +6,9 @@ echo "${TZ}" > /etc/timezone && \
 dpkg-reconfigure -f noninteractive tzdata > /dev/null 2>&1
 
 VARS_REQUIRED=(
-    AWS_KEY
-    AWS_SECRET
-    AWS_REGION
+    AWS_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY
+    AWS_DEFAULT_REGION
     R53_ZONE
     R53_DOMAINS
 )
@@ -21,9 +21,9 @@ for VAR in "${VARS_REQUIRED[@]}"; do
 done
 if [ "${VAR_ERROR}" ]; then exit 1; fi
 
-aws configure set aws_access_key_id ${AWS_KEY}
-aws configure set aws_secret_access_key ${AWS_SECRET}
-aws configure set default.region ${AWS_REGION}
+aws configure set aws_access_key_id ${AWS_ACCESS_KEY_ID}
+aws configure set AWS_SECRET_ACCESS_KEY_access_key ${AWS_SECRET_ACCESS_KEY}
+aws configure set default.region ${AWS_DEFAULT_REGION}
 aws configure set default.output json
 cp -rfun /opt/config/ddns-r53.sh /root/ddns-r53.sh
 chmod +x -R /root/ddns-r53.sh
