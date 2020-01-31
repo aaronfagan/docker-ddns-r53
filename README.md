@@ -1,5 +1,5 @@
-# Dynamic DNS with Route 53
-This image is an always-on solution to automatically update a Route 53 record set with your host IP address, at repeating intervals. Uses the AWS CLI, cron, and a shell script that checks if updates are required, and if so, executes them. If a domain does not already exist in your record set, it will be automatically created.
+# Dynamic DNS with Amazon Route 53
+This image is an always-on solution to automatically update a Amazon Route 53 record set with your host IP address, at repeating intervals. Uses the AWS CLI, cron, and a shell script that checks if updates are required, and if so, executes them. If a domain does not already exist in your record set, it will be automatically created.
 
 ## Environment Variables
 Variables without default are required.
@@ -11,14 +11,14 @@ Variables without default are required.
 - Your IAM user secret.
 
 **`AWS_DEFAULT_REGION`**
-- The AWS region your Route 53 hosted zone is in.
+- The AWS region your Amazon Route 53 hosted zone is in.
 
 **`CRON`**
 - **Default:** `0 * * * *` (Every hour)
 - Standard cron format. How often to run the DNS update check.
 
 **`R53_ZONE`**
-- The ID of the target hosted zone in Route 53.
+- The ID of the target hosted zone in Amazon Route 53.
 
 **`R53_DOMAINS`**
 - The target domain name(s) to update.
