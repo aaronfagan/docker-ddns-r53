@@ -36,6 +36,8 @@ Variables without default are required.
 - **Default:** Your ISP's DNS.
 - The name server to check records against.
 
+**`TZ`**
+- Your preferred timezone.
 
 ## IAM Policy (Example)
 ```
