@@ -40,7 +40,7 @@ R53_NS=$(echo ${R53_NS} | tr A-Z a-z)
 
 for DOMAIN in $(echo ${R53_DOMAINS} | sed -e "s/,/ /g" -e "s/  / /g"); do
 	DOMAIN=$(echo ${DOMAIN} | tr A-Z a-z)
-	FILENAME="ddns-${DOMAIN//./-}"
+	FILENAME="ddns-r53-${DOMAIN//./-}"
 	echo "${CRON} root /root/ddns-r53.sh --zone '${R53_ZONE}' --domain '${DOMAIN}' --type '${R53_TYPE}' --ttl '${R53_TTL}' --ns '${R53_NS}' > /proc/1/fd/1" > /etc/cron.d/${FILENAME}
 done
 
