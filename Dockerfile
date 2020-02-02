@@ -13,8 +13,8 @@ RUN apt-get update && \
 		nano \
 		software-properties-common
 		
-COPY ./config /opt/config
-COPY ./config/entrypoint.sh /sbin/entrypoint.sh
+COPY ./ /opt
+COPY ./entrypoint.sh /sbin/entrypoint.sh
 
 RUN chmod 755 /sbin/entrypoint.sh
 
