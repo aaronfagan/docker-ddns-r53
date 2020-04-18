@@ -1,5 +1,7 @@
 FROM ubuntu:18.04
 
+ARG DEBIAN_FRONTEND=noninteractive
+
 ENV CRON="0 * * * *"
 ENV R53_TYPE="A"
 ENV R53_TTL="3600"
