@@ -29,8 +29,7 @@ Example:
 }
 
 while [[ $# -gt 0 ]]; do
-	key="$1"
-	case $key in
+	case ${1} in
 		--zone)
 			ZONE="${2:-$ZONE}"
 			shift
