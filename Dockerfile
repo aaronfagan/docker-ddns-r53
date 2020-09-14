@@ -16,6 +16,7 @@ RUN apt-get update && \
 		software-properties-common
 		
 COPY ./ /root/src
+
 RUN chmod -R +x /root/src
 
 ENTRYPOINT ["/root/src/entrypoint.sh"]
