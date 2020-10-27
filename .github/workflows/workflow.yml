@@ -1,8 +1,8 @@
-name: 'Workflow'
-on: push
-
 env:
   DOCKER_IMAGE: 'aaronfagan/ddns-r53'
+
+name: 'Workflow'
+on: push
 
 jobs:
   build:
