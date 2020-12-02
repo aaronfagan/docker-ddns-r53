@@ -6,8 +6,7 @@ ENV CRON="0 * * * *"
 ENV R53_TYPE="A"
 ENV R53_TTL="3600"
 
-RUN apt-get update && \
-	apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
 		awscli \
 		cron \
 		curl \
