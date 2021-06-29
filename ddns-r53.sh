@@ -121,13 +121,13 @@ else
 		echo $JSON > ./${FILENAME}.json
 		aws route53 change-resource-record-sets --hosted-zone-id ${ZONE} --change-batch file://./${FILENAME}.json > ./${FILENAME}.log || exit 1
 		if grep -q 'error' ./${FILENAME}.log; then
-                        echo -ne "failed! $(grep 'error' ./${FILENAME}.log)\033[0m\n"
-                        rm -rf ${FILENAME}.*
-                        exit 1 
+			echo -ne "failed! $(grep 'error' ./${FILENAME}.log)\033[0m\n"
+			rm -rf ${FILENAME}.*
+			exit 1 
 		else
-                        echo -ne "success!\033[0m\n"
-                        rm -rf ${FILENAME}.*
-                        exit 0
+			echo -ne "success!\033[0m\n"
+			rm -rf ${FILENAME}.*
+			exit 0
 		fi
 	fi
 fi
