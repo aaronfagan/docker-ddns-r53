@@ -35,7 +35,6 @@ for DOMAIN in $(echo ${R53_DOMAINS} | sed -e "s/,/ /g" -e "s/  / /g"); do
 	DOMAIN=$(echo ${DOMAIN} | tr A-Z a-z)
 	FILENAME="ddns-r53-${DOMAIN//./-}"
 	echo "${CRON} root /root/src/ddns-r53.sh --zone '${R53_ZONE}' --domain '${DOMAIN}' --type '${R53_TYPE}' --ttl '${R53_TTL}' --ns '${R53_NS}' > /proc/1/fd/1" > /etc/cron.d/${FILENAME}
-	/root/src/ddns-r53.sh --zone '${R53_ZONE}' --domain '${DOMAIN}' --type '${R53_TYPE}' --ttl '${R53_TTL}' --ns '${R53_NS}'
 done
 
 service cron start > /dev/null 2>&1
