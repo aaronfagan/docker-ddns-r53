@@ -14,8 +14,8 @@ Usage:
 Options:
     --zone      Your Route53 Zone ID. REQUIRED.
     --domain    The domain name to update. REQUIRED.
-    --type      The DNS record type to update. DEFAULT = $TYPE.
-    --ttl       The TTL to set on the record, when udpating. DEFAULT = $TTL.
+    --type      The DNS record type to update. DEFAULT = ${TYPE}.
+    --ttl       The TTL to set on the record, when udpating. DEFAULT = ${TTL}.
     --ns        The name server to check records against.
 
 Example:
@@ -62,26 +62,26 @@ while [[ $# -gt 0 ]]; do
 		*) 
 			INVALID+=("$1")
 			shift
-			echo -e "\033[0;31mERROR:\033[0;37m Invalid arguement: $INVALID\033[0m"
+			echo -e "\033[0;31mERROR:\033[0;37m Invalid arguement: ${INVALID}\033[0m"
 			usage
 			exit 0
 		;;
 	esac
 done
 
-ZONE=$(echo $ZONE | tr a-z A-Z)
-DOMAIN=$(echo $DOMAIN | tr A-Z a-z)
-TYPE=$(echo $TYPE | tr a-z A-Z)
-NS=$(echo $NS | tr A-Z a-z)
+ZONE=$(echo ${ZONE} | tr a-z A-Z)
+DOMAIN=$(echo ${DOMAIN} | tr A-Z a-z)
+TYPE=$(echo ${TYPE} | tr a-z A-Z)
+NS=$(echo ${NS} | tr A-Z a-z)
 
 IP=$(curl https://checkip.amazonaws.com --silent)
-if [ -n "$NS" ]; then
-	DNS=$(dig $DOMAIN @$NS +short)
+if [ -n "${NS}" ]; then
+	DNS=$(dig ${DOMAIN} @${NS} +short)
 	if [ "$?" = "10" ]; then
-		DNS=$(dig $DOMAIN +short)
+		DNS=$(dig ${DOMAIN} +short)
 	fi
 else
-	DNS=$(dig $DOMAIN +short)
+	DNS=$(dig ${DOMAIN} +short)
 fi
 
 JSON=$(cat <<EOF
@@ -91,12 +91,12 @@ JSON=$(cat <<EOF
 		{
 			"Action": "UPSERT",
 			"ResourceRecordSet": {
-				"Name": "$DOMAIN",
-				"Type": "$TYPE",
-				"TTL": $TTL,
+				"Name": "${DOMAIN}",
+				"Type": "${TYPE}",
+				"TTL": ${TTL},
 				"ResourceRecords": [
 					{
-						"Value": "$IP"
+						"Value": "${IP}"
 					}
 				]
 			}
@@ -106,29 +106,28 @@ JSON=$(cat <<EOF
 EOF
 )
 
-if [ -z "$ZONE" ] || [ -z "$DOMAIN" ]; then
-	if [ -z "$ZONE" ]; then echo -ne "\033[0;31mERROR:\033[0;37m --zone arguement is required.\033[0m\n"; fi
-	if [ -z "$DOMAIN" ]; then echo -ne "\033[0;31mERROR:\033[0;37m --domain arguement is required.\033[0m\n"; fi
+if [ -z "${ZONE}" ] || [ -z "${DOMAIN}" ]; then
+	if [ -z "${ZONE}" ]; then echo -ne "\033[0;31mERROR:\033[0;37m --zone arguement is required.\033[0m\n"; fi
+	if [ -z "${DOMAIN}" ]; then echo -ne "\033[0;31mERROR:\033[0;37m --domain arguement is required.\033[0m\n"; fi
 	usage
 	exit 0
 else
-	if [ "$IP" = "$DNS" ]; then
-		echo -ne "\033[0;37m[$(date +'%F %T')] $(echo $DOMAIN | tr A-Z a-z) - Update not required.\033[0m\n"
+	if [ "${IP}" = "${DNS}" ]; then
+		echo -ne "\033[0;37m[$(date +'%F %T')] $(echo ${DOMAIN} | tr A-Z a-z) - Update not required.\033[0m\n"
 		exit 0
 	else
+		echo -ne "\033[0;37m[$(date +'%F %T')] $(echo ${DOMAIN} | tr A-Z a-z) - Updating... "
 		FILENAME="${DOMAIN//./-}_$(date +'%Y-%m-%d_%H-%M-%S_%N')"
-		echo $JSON > ./$FILENAME.json
-		aws route53 change-resource-record-sets --hosted-zone-id $ZONE --change-batch file://./$FILENAME.json &> ./$FILENAME.log
-		grep 'error' ./$FILENAME.log > /dev/null 2>&1
-		if [ $? != 0 ]; then 
-			UPDATE_STATUS="success!\033[0m\n"
-			rm -rf $FILENAME.*
-			exit 0
+		echo $JSON > ./${FILENAME}.json
+		aws route53 change-resource-record-sets --hosted-zone-id ${ZONE} --change-batch file://./${FILENAME}.json > ./${FILENAME}.log || exit 1
+		if grep -q 'error' ./${FILENAME}.log; then
+                        echo -ne "failed! $(grep 'error' ./${FILENAME}.log)\033[0m\n"
+                        rm -rf ${FILENAME}.*
+                        exit 1 
 		else
-			UPDATE_STATUS="failed! $(grep 'error' ${0%.*}.log)\033[0m\n"
-			rm -rf $FILENAME.*
-			exit 1
+                        echo -ne "success!\033[0m\n"
+                        rm -rf ${FILENAME}.*
+                        exit 0
 		fi
-		echo -ne "\033[0;37m[$(date +'%F %T')] $(echo $DOMAIN | tr A-Z a-z) - Updating... ${UPDATE_STATUS}"
 	fi
 fi
